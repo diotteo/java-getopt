@@ -836,6 +836,9 @@ public class Getopt extends Object {
 				optopt = pfound.val;
 				return '?';
 			}
+		} else if (pfound.has_arg == LongOpt.OPTIONAL_ARGUMENT && optind < argv.length) {
+				optarg = argv[optind];
+				++optind;
 		} else if (pfound.has_arg == LongOpt.REQUIRED_ARGUMENT) {
 			if (optind < argv.length) {
 				optarg = argv[optind];
