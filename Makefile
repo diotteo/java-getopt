@@ -1,3 +1,6 @@
+JAVA ?= java
+JAVAC ?= javac
+
 #ARGS='--help'
 BUILD_DIR := build
 
@@ -17,7 +20,7 @@ demo:
 jar: java-getopt.jar
 
 java-getopt.jar: all
-	rm $(demo) || true
+	@[ ! -e $(demo) ] || rm $(demo)
 	jar cf $@ -C $(BUILD_DIR) .
 
 .PHONY: all
@@ -25,7 +28,7 @@ all: $(objects) $(res)
 
 
 $(objects): $(BUILD_DIR)/%.class: src/main/java/%.java
-	@mkdir -p build/resources/gnu/getopt || true
+	@[ -d build/resources/gnu/getopt ] || mkdir -p build/resources/gnu/getopt
 	$(JAVAC) -d build $(src)
 
 
@@ -44,5 +47,5 @@ $(demo): $(BUILD_DIR)/%.class: src/main/java/%.java
 
 .PHONY: docs
 docs: $(src)
-	@mkdir docs || true
+	@[ -d docs ] || mkdir docs
 	javadoc -d docs -package -use -version -author $^
